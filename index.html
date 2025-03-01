@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resit Jualan</title>
+    <title>Resit Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,6 +13,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
+            position: relative;
         }
 
         .container {
@@ -20,13 +22,15 @@
             padding: 20px;
             border: 1px solid #ccc;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
+            width: 100%;
             max-width: 800px;
+            margin-bottom: 60px; /* Ruang untuk footer */
         }
 
         h1 {
             text-align: center;
             color: #333;
+            font-size: 24px;
         }
 
         .input-section {
@@ -45,6 +49,7 @@
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-size: 16px;
         }
 
         .input-section button {
@@ -55,6 +60,8 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
+            width: 100%;
         }
 
         .input-section button:hover {
@@ -72,10 +79,12 @@
         .receipt h2 {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 20px;
         }
 
         .receipt p {
             margin: 5px 0;
+            font-size: 16px;
         }
 
         table {
@@ -89,6 +98,7 @@
             padding: 8px;
             text-align: center;
             color: black; /* Warna teks hitam */
+            font-size: 14px;
         }
 
         table th {
@@ -103,9 +113,13 @@
 
         footer {
             text-align: center;
-            margin-top: 20px;
             font-style: italic;
             color: #555;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 10px 0;
+            background-color: #f4f4f4;
         }
 
         @media print {
@@ -116,12 +130,53 @@
                 border: none;
                 box-shadow: none;
             }
+            footer {
+                display: none; /* Sembunyikan footer ketika mencetak */
+            }
+        }
+
+        /* Responsive Design untuk Mobile */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            .input-section input, .input-section select, .input-section textarea {
+                font-size: 14px;
+            }
+
+            .input-section button {
+                font-size: 14px;
+            }
+
+            .receipt h2 {
+                font-size: 18px;
+            }
+
+            .receipt p {
+                font-size: 14px;
+            }
+
+            table th, table td {
+                font-size: 12px;
+            }
+
+            .total {
+                font-size: 16px;
+            }
+        }
+
+        #qrcode img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Resit Jualan</h1>
+        <h1>Resit Generator</h1>
 
         <!-- Input Section -->
         <div class="input-section">
@@ -138,6 +193,10 @@
 
             <label for="senderPhone">No. Telefon Syarikat:</label>
             <input type="text" id="senderPhone" placeholder="Masukkan no. telefon syarikat">
+
+            <!-- Input untuk gambar QR Code -->
+            <label for="qrCodeImage">Gambar QR Code:</label>
+            <input type="file" id="qrCodeImage" accept="image/*">
 
             <!-- Input untuk maklumat pelanggan -->
             <label for="customerName">Nama Pelanggan:</label>
@@ -174,6 +233,7 @@
             <button onclick="generateReceipt()">Jana Resit</button>
             <button onclick="printReceipt()">Cetak Resit</button>
             <button onclick="saveAsPDF()">Simpan sebagai PDF</button>
+            <button onclick="saveAsImage()">Simpan sebagai Gambar</button>
         </div>
 
         <!-- Receipt Section -->
@@ -209,6 +269,9 @@
                 </table>
             </section>
 
+            <!-- QR Code untuk Pembayaran -->
+            <div id="qrcode"></div>
+
             <section class="total">
                 <h3>Jumlah Keseluruhan</h3>
                 <p>Diskaun: <span id="displayDiscount">0</span>%</p>
@@ -222,16 +285,30 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.24/jspdf.plugin.autotable.min.js"></script>
+    <!-- Footer di halaman depan -->
+    <footer>
+        <p>Mr.Syah @ 2025 Receipt Generator</p>
+    </footer>
+
+    <!-- Library untuk SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Library untuk html2canvas -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
     <script>
         let items = [];
         let totalAmount = 0;
         let logoFile = null;
+        let qrCodeFile = null;
 
         // Fungsi untuk memuat naik logo
         document.getElementById('logo').addEventListener('change', function (event) {
             logoFile = event.target.files[0];
+        });
+
+        // Fungsi untuk memuat naik gambar QR code
+        document.getElementById('qrCodeImage').addEventListener('change', function (event) {
+            qrCodeFile = event.target.files[0];
         });
 
         // Fungsi untuk menambah barang
@@ -250,9 +327,17 @@
                 document.getElementById('itemQuantity').value = '';
                 document.getElementById('itemPrice').value = '';
 
-                alert('Barang berjaya ditambah!');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berjaya!',
+                    text: 'Barang berjaya ditambah.',
+                });
             } else {
-                alert('Sila isi semua maklumat barang.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ralat',
+                    text: 'Sila isi semua maklumat barang.',
+                });
             }
         }
 
@@ -268,7 +353,11 @@
             const currency = document.getElementById('currency').value;
 
             if (!senderName || !senderAddress || !senderPhone || !customerName || !customerPhone || items.length === 0) {
-                alert('Sila isi semua maklumat pengirim, pelanggan, dan tambah sekurang-kurangnya satu barang.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ralat',
+                    text: 'Sila isi semua maklumat pengirim, pelanggan, dan tambah sekurang-kurangnya satu barang.',
+                });
                 return;
             }
 
@@ -318,11 +407,33 @@
             document.getElementById('displayTax').textContent = tax;
             document.getElementById('totalAmount').textContent = totalWithTax.toFixed(2);
 
+            // Paparkan gambar QR code
+            const qrcodeDiv = document.getElementById('qrcode');
+            qrcodeDiv.innerHTML = ''; // Kosongkan QR code sebelum menambah yang baru
+            if (qrCodeFile) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.style.maxWidth = '150px';
+                    img.style.display = 'block';
+                    img.style.margin = '0 auto';
+                    qrcodeDiv.appendChild(img);
+                };
+                reader.readAsDataURL(qrCodeFile);
+            }
+
             // Tunjukkan resit
             document.getElementById('receipt').style.display = 'block';
 
             // Auto-nombor resit
             document.getElementById('receiptNumber').textContent = generateReceiptNumber();
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Berjaya!',
+                text: 'Resit telah berjaya dijana.',
+            });
         }
 
         // Fungsi untuk mencetak resit
@@ -488,6 +599,16 @@
                 // Simpan PDF
                 doc.save('resit.pdf');
             }
+        }
+
+        // Fungsi untuk menyimpan resit sebagai gambar
+        function saveAsImage() {
+            html2canvas(document.getElementById('receipt')).then(function (canvas) {
+                const link = document.createElement('a');
+                link.download = 'resit.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
         }
 
         // Fungsi untuk auto-nombor resit
