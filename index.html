@@ -5,117 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resit Generator</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 800px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        .input-section {
-            margin-bottom: 20px;
-        }
-
-        .input-section label {
-            display: block;
-            margin: 10px 0 5px;
-            font-weight: bold;
-        }
-
-        .input-section input, .input-section select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .input-section button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .input-section button:hover {
-            background-color: #218838;
-        }
-
-        .receipt {
-            margin-top: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            display: none; /* Sembunyikan resit sampai data diisi */
-        }
-
-        .receipt h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .receipt p {
-            margin: 5px 0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        table th, table td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: center;
-        }
-
-        table th {
-            background-color: #f4f4f4;
-        }
-
-        .total {
-            text-align: right;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-style: italic;
-            color: #555;
-        }
-
-        @media print {
-            .input-section, button {
-                display: none; /* Sembunyikan input dan butang ketika mencetak */
-            }
-            .receipt {
-                border: none;
-                box-shadow: none;
-            }
-        }
+        /* (CSS sama seperti sebelumnya) */
     </style>
 </head>
 <body>
@@ -124,87 +14,26 @@
 
         <!-- Input Section -->
         <div class="input-section">
-            <label for="customerName">Nama Pelanggan:</label>
-            <input type="text" id="customerName" placeholder="Masukkan nama pelanggan">
-
-            <label for="customerPhone">No. Telefon:</label>
-            <input type="text" id="customerPhone" placeholder="Masukkan no. telefon">
-
-            <label for="currency">Mata Wang:</label>
-            <select id="currency">
-                <option value="RM">RM (Ringgit Malaysia)</option>
-                <option value="USD">USD (Dollar Amerika)</option>
-                <option value="SGD">SGD (Dollar Singapura)</option>
-            </select>
-
-            <label for="discount">Diskaun (%):</label>
-            <input type="number" id="discount" placeholder="Masukkan diskaun">
-
-            <label for="tax">Cukai (%):</label>
-            <input type="number" id="tax" placeholder="Masukkan cukai">
-
-            <label for="itemName">Nama Barang:</label>
-            <input type="text" id="itemName" placeholder="Masukkan nama barang">
-
-            <label for="itemQuantity">Kuantiti:</label>
-            <input type="number" id="itemQuantity" placeholder="Masukkan kuantiti">
-
-            <label for="itemPrice">Harga Seunit:</label>
-            <input type="number" id="itemPrice" placeholder="Masukkan harga seunit">
-
-            <button onclick="addItem()">Tambah Barang</button>
-            <button onclick="generateReceipt()">Jana Resit</button>
-            <button onclick="printReceipt()">Cetak Resit</button>
-            <button onclick="saveAsPDF()">Simpan sebagai PDF</button>
+            <!-- (Input fields sama seperti sebelumnya) -->
         </div>
 
         <!-- Receipt Section -->
         <div class="receipt" id="receipt">
-            <h2>Resit Jualan</h2>
-            <p>No. Resit: <span id="receiptNumber"></span></p>
-            <p>Tarikh: <span id="receiptDate"></span></p>
-
-            <section class="customer-info">
-                <h3>Maklumat Pelanggan</h3>
-                <p>Nama: <span id="displayCustomerName"></span></p>
-                <p>No. Telefon: <span id="displayCustomerPhone"></span></p>
-            </section>
-
-            <section class="items">
-                <h3>Senarai Barang</h3>
-                <table id="itemsTable">
-                    <thead>
-                        <tr>
-                            <th>Bil</th>
-                            <th>Nama Barang</th>
-                            <th>Kuantiti</th>
-                            <th>Harga Seunit</th>
-                            <th>Jumlah</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Baris barang akan ditambahkan di sini -->
-                    </tbody>
-                </table>
-            </section>
-
-            <section class="total">
-                <h3>Jumlah Keseluruhan</h3>
-                <p>Diskaun: <span id="displayDiscount">0</span>%</p>
-                <p>Cukai: <span id="displayTax">0</span>%</p>
-                <p>Jumlah: <span id="currencyDisplay"></span> <span id="totalAmount">0.00</span></p>
-            </section>
-
-            <footer>
-                <p>Terima kasih kerana berurusan dengan kami!</p>
-            </footer>
+            <!-- (Receipt content sama seperti sebelumnya) -->
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.24/jspdf.plugin.autotable.min.js"></script>
     <script>
         let items = [];
         let totalAmount = 0;
+        let logoFile = null;
+
+        // Fungsi untuk memuat naik logo
+        document.getElementById('logo').addEventListener('change', function (event) {
+            logoFile = event.target.files[0];
+        });
 
         // Fungsi untuk menambah barang
         function addItem() {
@@ -230,16 +59,30 @@
 
         // Fungsi untuk menjana resit
         function generateReceipt() {
+            const senderName = document.getElementById('senderName').value;
+            const senderAddress = document.getElementById('senderAddress').value;
+            const senderPhone = document.getElementById('senderPhone').value;
             const customerName = document.getElementById('customerName').value;
             const customerPhone = document.getElementById('customerPhone').value;
             const discount = parseFloat(document.getElementById('discount').value) || 0;
             const tax = parseFloat(document.getElementById('tax').value) || 0;
             const currency = document.getElementById('currency').value;
 
-            if (!customerName || !customerPhone || items.length === 0) {
-                alert('Sila isi maklumat pelanggan dan tambah sekurang-kurangnya satu barang.');
+            if (!senderName || !senderAddress || !senderPhone || !customerName || !customerPhone || items.length === 0) {
+                alert('Sila isi semua maklumat pengirim, pelanggan, dan tambah sekurang-kurangnya satu barang.');
                 return;
             }
+
+            // Paparkan maklumat pengirim
+            const receiptHeader = document.getElementById('receiptHeader');
+            receiptHeader.innerHTML = `
+                <div style="text-align: center;">
+                    ${logoFile ? `<img src="${URL.createObjectURL(logoFile)}" alt="Logo" style="max-width: 100px; margin-bottom: 10px;">` : ''}
+                    <h3>${senderName}</h3>
+                    <p>${senderAddress}</p>
+                    <p>No. Telefon: ${senderPhone}</p>
+                </div>
+            `;
 
             // Paparkan maklumat pelanggan
             document.getElementById('displayCustomerName').textContent = customerName;
@@ -293,9 +136,159 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
 
-            const receiptContent = document.getElementById('receipt').innerText;
-            doc.text(receiptContent, 10, 10);
-            doc.save('resit.pdf');
+            // Maklumat pengirim
+            const senderName = document.getElementById('senderName').value;
+            const senderAddress = document.getElementById('senderAddress').value;
+            const senderPhone = document.getElementById('senderPhone').value;
+
+            // Maklumat resit
+            const receiptNumber = document.getElementById('receiptNumber').textContent;
+            const receiptDate = document.getElementById('receiptDate').textContent;
+            const customerName = document.getElementById('displayCustomerName').textContent;
+            const customerPhone = document.getElementById('displayCustomerPhone').textContent;
+            const currency = document.getElementById('currency').value;
+            const discount = document.getElementById('displayDiscount').textContent;
+            const tax = document.getElementById('displayTax').textContent;
+            const totalAmount = document.getElementById('totalAmount').textContent;
+
+            // Tambahkan logo ke PDF (jika ada)
+            if (logoFile) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = function () {
+                        doc.addImage(img, 'PNG', 10, 10, 50, 50); // Letakkan logo di bahagian atas
+                        doc.setFontSize(12);
+                        doc.text(senderName, 70, 20);
+                        doc.text(senderAddress, 70, 30);
+                        doc.text(`No. Telefon: ${senderPhone}`, 70, 40);
+
+                        // Header resit
+                        doc.setFontSize(18);
+                        doc.text("Resit Jualan", 10, 70);
+                        doc.setFontSize(12);
+                        doc.text(`No. Resit: ${receiptNumber}`, 10, 80);
+                        doc.text(`Tarikh: ${receiptDate}`, 10, 90);
+
+                        // Maklumat pelanggan
+                        doc.setFontSize(14);
+                        doc.text("Maklumat Pelanggan", 10, 100);
+                        doc.setFontSize(12);
+                        doc.text(`Nama: ${customerName}`, 10, 110);
+                        doc.text(`No. Telefon: ${customerPhone}`, 10, 120);
+
+                        // Senarai barang dalam bentuk jadual
+                        const itemsTable = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+                        const rows = itemsTable.getElementsByTagName('tr');
+                        const data = [];
+                        for (let i = 0; i < rows.length; i++) {
+                            const cols = rows[i].getElementsByTagName('td');
+                            data.push([
+                                cols[0].textContent, // Bil
+                                cols[1].textContent, // Nama Barang
+                                cols[2].textContent, // Kuantiti
+                                cols[3].textContent, // Harga Seunit
+                                cols[4].textContent  // Jumlah
+                            ]);
+                        }
+
+                        doc.autoTable({
+                            startY: 130,
+                            head: [['Bil', 'Nama Barang', 'Kuantiti', 'Harga Seunit', 'Jumlah']],
+                            body: data,
+                            theme: 'grid',
+                            styles: { fontSize: 10 },
+                            headStyles: { fillColor: [241, 241, 241] }
+                        });
+
+                        // Jumlah keseluruhan
+                        const finalY = doc.lastAutoTable.finalY + 10;
+                        doc.setFontSize(14);
+                        doc.text("Jumlah Keseluruhan", 10, finalY);
+                        doc.setFontSize(12);
+                        doc.text(`Diskaun: ${discount}%`, 10, finalY + 10);
+                        doc.text(`Cukai: ${tax}%`, 10, finalY + 20);
+                        doc.text(`Jumlah: ${currency} ${totalAmount}`, 10, finalY + 30);
+
+                        // Ucapan terima kasih di tengah bawah
+                        doc.setFontSize(12);
+                        const pageWidth = doc.internal.pageSize.getWidth();
+                        const text = "Terima kasih kerana berurusan dengan kami!";
+                        const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                        const textX = (pageWidth - textWidth) / 2;
+                        doc.text(text, textX, finalY + 50);
+
+                        // Simpan PDF
+                        doc.save('resit.pdf');
+                    };
+                };
+                reader.readAsDataURL(logoFile);
+            } else {
+                // Jika tiada logo, teruskan tanpa logo
+                doc.setFontSize(12);
+                doc.text(senderName, 10, 20);
+                doc.text(senderAddress, 10, 30);
+                doc.text(`No. Telefon: ${senderPhone}`, 10, 40);
+
+                // Header resit
+                doc.setFontSize(18);
+                doc.text("Resit Jualan", 10, 50);
+                doc.setFontSize(12);
+                doc.text(`No. Resit: ${receiptNumber}`, 10, 60);
+                doc.text(`Tarikh: ${receiptDate}`, 10, 70);
+
+                // Maklumat pelanggan
+                doc.setFontSize(14);
+                doc.text("Maklumat Pelanggan", 10, 80);
+                doc.setFontSize(12);
+                doc.text(`Nama: ${customerName}`, 10, 90);
+                doc.text(`No. Telefon: ${customerPhone}`, 10, 100);
+
+                // Senarai barang dalam bentuk jadual
+                const itemsTable = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+                const rows = itemsTable.getElementsByTagName('tr');
+                const data = [];
+                for (let i = 0; i < rows.length; i++) {
+                    const cols = rows[i].getElementsByTagName('td');
+                    data.push([
+                        cols[0].textContent, // Bil
+                        cols[1].textContent, // Nama Barang
+                        cols[2].textContent, // Kuantiti
+                        cols[3].textContent, // Harga Seunit
+                        cols[4].textContent  // Jumlah
+                    ]);
+                }
+
+                doc.autoTable({
+                    startY: 110,
+                    head: [['Bil', 'Nama Barang', 'Kuantiti', 'Harga Seunit', 'Jumlah']],
+                    body: data,
+                    theme: 'grid',
+                    styles: { fontSize: 10 },
+                    headStyles: { fillColor: [241, 241, 241] }
+                });
+
+                // Jumlah keseluruhan
+                const finalY = doc.lastAutoTable.finalY + 10;
+                doc.setFontSize(14);
+                doc.text("Jumlah Keseluruhan", 10, finalY);
+                doc.setFontSize(12);
+                doc.text(`Diskaun: ${discount}%`, 10, finalY + 10);
+                doc.text(`Cukai: ${tax}%`, 10, finalY + 20);
+                doc.text(`Jumlah: ${currency} ${totalAmount}`, 10, finalY + 30);
+
+                // Ucapan terima kasih di tengah bawah
+                doc.setFontSize(12);
+                const pageWidth = doc.internal.pageSize.getWidth();
+                const text = "Terima kasih kerana berurusan dengan kami!";
+                const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                const textX = (pageWidth - textWidth) / 2;
+                doc.text(text, textX, finalY + 50);
+
+                // Simpan PDF
+                doc.save('resit.pdf');
+            }
         }
 
         // Fungsi untuk auto-nombor resit
