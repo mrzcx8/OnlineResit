@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resit Generator</title>
+    <title>Resit Jualan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -88,6 +88,7 @@
             border: 1px solid #ccc;
             padding: 8px;
             text-align: center;
+            color: black; /* Warna teks hitam */
         }
 
         table th {
@@ -120,7 +121,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Resit Generator</h1>
+        <h1>Resit Jualan</h1>
 
         <!-- Input Section -->
         <div class="input-section">
@@ -396,8 +397,8 @@
                             head: [['Bil', 'Nama Barang', 'Kuantiti', 'Harga Seunit', 'Jumlah']],
                             body: data,
                             theme: 'grid',
-                            styles: { fontSize: 10 },
-                            headStyles: { fillColor: [241, 241, 241] }
+                            styles: { fontSize: 10, textColor: [0, 0, 0] }, // Warna teks hitam
+                            headStyles: { fillColor: [241, 241, 241], textColor: [0, 0, 0] } // Warna teks hitam
                         });
 
                         // Jumlah keseluruhan
@@ -463,8 +464,8 @@
                     head: [['Bil', 'Nama Barang', 'Kuantiti', 'Harga Seunit', 'Jumlah']],
                     body: data,
                     theme: 'grid',
-                    styles: { fontSize: 10 },
-                    headStyles: { fillColor: [241, 241, 241] }
+                    styles: { fontSize: 10, textColor: [0, 0, 0] }, // Warna teks hitam
+                    headStyles: { fillColor: [241, 241, 241], textColor: [0, 0, 0] } // Warna teks hitam
                 });
 
                 // Jumlah keseluruhan
